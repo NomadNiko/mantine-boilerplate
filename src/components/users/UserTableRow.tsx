@@ -77,7 +77,7 @@ function UserTableRow({ user }: UserTableRowProps) {
           maxWidth: "180px",
         }}
       >
-        <Popover width={300} position="bottom" withArrow shadow="md">
+        <Popover width="max-content" position="bottom" withArrow shadow="md">
           <Popover.Target>
             <div
               style={{
@@ -92,7 +92,9 @@ function UserTableRow({ user }: UserTableRowProps) {
             </div>
           </Popover.Target>
           <Popover.Dropdown>
-            <Text size="sm">{user?.email}</Text>
+            <Text size="sm" ta="center" style={{ whiteSpace: "nowrap" }}>
+              {user?.email}
+            </Text>
           </Popover.Dropdown>
         </Popover>
       </td>
