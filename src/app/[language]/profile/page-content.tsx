@@ -32,6 +32,9 @@ function Profile() {
           <Title order={3} mb="md" data-testid="user-name">
             {user?.firstName} {user?.lastName}
           </Title>
+          <Title order={5} mb="xs" data-testid="user-username" c="dimmed">
+            @{user?.username || "no-username"}
+          </Title>
           <Title order={5} mb="md" data-testid="user-email">
             {user?.email}
           </Title>

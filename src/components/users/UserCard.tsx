@@ -46,7 +46,18 @@ export function UserCard({ user }: UserCardProps) {
           <Text size="lg" fw={500}>
             {user?.firstName} {user?.lastName}
           </Text>
-          <Text size="sm" c="dimmed">
+          <Text
+            size="sm"
+            c="dimmed"
+            style={{ wordBreak: "break-word", maxWidth: "200px" }}
+          >
+            @{user?.username || "no-username"}
+          </Text>
+          <Text
+            size="sm"
+            c="dimmed"
+            style={{ wordBreak: "break-word", maxWidth: "200px" }}
+          >
             {user?.email}
           </Text>
           <Badge size="sm" w="fit-content">

@@ -27,25 +27,35 @@ function UserTableHeader({
       <tr>
         {/* Avatar column - fixed width, centered */}
         <th style={{ width: 50, textAlign: "center" }}></th>
+        {/* Username column - fixed width, left-aligned */}
+        <TableSortCell<User>
+          width={120}
+          orderBy={orderBy}
+          order={order}
+          column="username"
+          handleRequestSort={handleRequestSort}
+        >
+          {tUsers("admin-panel-users:table.column2")}
+        </TableSortCell>
         {/* Name column - fixed width, left-aligned */}
         <TableSortCell<User>
-          width={200}
+          width={150}
           orderBy={orderBy}
           order={order}
           column="firstName"
           handleRequestSort={handleRequestSort}
         >
-          {tUsers("admin-panel-users:table.column2")}
+          {tUsers("admin-panel-users:table.column3")}
         </TableSortCell>
         {/* Email column - flexible width, sortable, left-aligned */}
         <TableSortCell<User>
-          width={200}
+          width={180}
           orderBy={orderBy}
           order={order}
           column="email"
           handleRequestSort={handleRequestSort}
         >
-          {tUsers("admin-panel-users:table.column3")}
+          {tUsers("admin-panel-users:table.column4")}
         </TableSortCell>
         {/* Role column - fixed width, centered */}
         <TableSortCell<User>
@@ -55,7 +65,7 @@ function UserTableHeader({
           column="role"
           handleRequestSort={handleRequestSort}
         >
-          {tUsers("admin-panel-users:table.column4")}
+          {tUsers("admin-panel-users:table.column5")}
         </TableSortCell>
         {/* Actions column - fixed width, centered */}
         <th style={{ width: 375, textAlign: "right" }}></th>

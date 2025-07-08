@@ -26,6 +26,7 @@ import useGlobalLoading from "@/services/loading/use-global-loading";
 
 type CreateFormData = {
   email: string;
+  username: string;
   firstName: string;
   lastName: string;
   password: string;
@@ -42,6 +43,11 @@ const useValidationSchema = () => {
       .email(t("admin-panel-users-create:inputs.email.validation.invalid"))
       .required(
         t("admin-panel-users-create:inputs.firstName.validation.required")
+      ),
+    username: yup
+      .string()
+      .required(
+        t("admin-panel-users-create:inputs.username.validation.required")
       ),
     firstName: yup
       .string()
@@ -110,6 +116,7 @@ function FormCreateUser() {
     resolver: yupResolver(validationSchema),
     defaultValues: {
       email: "",
+      username: "",
       firstName: "",
       lastName: "",
       password: "",
@@ -180,6 +187,19 @@ function FormCreateUser() {
                   error={fieldState.error?.message}
                   data-testid="new-user-email"
                   autoComplete="new-user-email"
+                />
+              )}
+            />
+            <Controller
+              name="username"
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  label={t("admin-panel-users-create:inputs.username.label")}
+                  error={fieldState.error?.message}
+                  data-testid="new-user-username"
+                  autoComplete="new-user-username"
                 />
               )}
             />

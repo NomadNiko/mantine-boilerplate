@@ -16,6 +16,7 @@ import { useSnackbar } from "@/components/mantine/feedback/notification-service"
 export type EditProfileBasicInfoFormData = {
   firstName: string;
   lastName: string;
+  username: string;
   photo?: FileEntity;
 };
 
@@ -28,6 +29,9 @@ const useValidationBasicInfoSchema = () => {
     lastName: yup
       .string()
       .required(t("profile:inputs.lastName.validation.required")),
+    username: yup
+      .string()
+      .required(t("profile:inputs.username.validation.required")),
   });
 };
 
@@ -43,6 +47,7 @@ export function BasicInfoForm() {
     defaultValues: {
       firstName: "",
       lastName: "",
+      username: "",
       photo: undefined,
     },
   });
@@ -75,6 +80,7 @@ export function BasicInfoForm() {
     reset({
       firstName: user?.firstName ?? "",
       lastName: user?.lastName ?? "",
+      username: user?.username ?? "",
       photo: user?.photo,
     });
   }, [user, reset]);
@@ -114,6 +120,19 @@ export function BasicInfoForm() {
                   label={t("profile:inputs.lastName.label")}
                   error={fieldState.error?.message}
                   data-testid="last-name"
+                />
+              )}
+            />
+
+            <Controller
+              name="username"
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  label={t("profile:inputs.username.label")}
+                  error={fieldState.error?.message}
+                  data-testid="username"
                 />
               )}
             />

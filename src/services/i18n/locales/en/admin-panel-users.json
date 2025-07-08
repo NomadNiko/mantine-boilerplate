@@ -4,9 +4,10 @@
   "noUsersFound": "No Users Found.",
   "table": {
     "column1": "ID",
-    "column2": "Name",
-    "column3": "Email",
-    "column4": "Role"
+    "column2": "Username",
+    "column3": "Name",
+    "column4": "Email",
+    "column5": "Role"
   },
   "actions": {
     "add": "Add User",

@@ -10,7 +10,9 @@ import { FormActions } from "@/components/form/profile-edit/form-actions";
 import { useSnackbar } from "@/components/mantine/feedback/notification-service";
 import RouteGuard from "@/services/auth/route-guard";
 import { RoleEnum } from "@/services/api/types/role";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { usersQueryKeys } from "../../queries/queries";
 
 type ChangePasswordFormData = {
   password: string;
@@ -43,6 +45,8 @@ const useValidationSchema = () => {
 function EditUserPassword() {
   const params = useParams<{ id: string }>();
   const userId = params.id;
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const fetchPatchUser = usePatchUserService();
   const { t } = useTranslation("admin-panel-users-edit");
   const validationSchema = useValidationSchema();
@@ -83,6 +87,9 @@ function EditUserPassword() {
       enqueueSnackbar(t("admin-panel-users-edit:alerts.password.success"), {
         variant: "success",
       });
+      // Invalidate users query to refresh the data
+      queryClient.invalidateQueries({ queryKey: usersQueryKeys.list().key });
+      router.push("/admin-panel/users");
     }
   });
 

@@ -21,6 +21,15 @@
         "required": "Last Name is required"
       }
     },
+    "username": {
+      "label": "Username",
+      "validation": {
+        "required": "Username is required",
+        "server": {
+          "usernameExists": "Username is already taken"
+        }
+      }
+    },
     "email": {
       "label": "New Email",
       "validation": {

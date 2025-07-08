@@ -1,5 +1,5 @@
 // src/components/users/UserTableRow.tsx
-import { Avatar } from "@mantine/core"; // Import Avatar directly from Mantine
+import { Avatar, Popover, Text } from "@mantine/core"; // Import Avatar directly from Mantine
 import { User } from "@/services/api/types/user";
 import { useTranslation } from "@/services/i18n/client";
 import { Box, useMantineColorScheme } from "@mantine/core";
@@ -34,12 +34,85 @@ function UserTableRow({ user }: UserTableRowProps) {
           />
         </Box>
       </td>
-      <td style={{ width: 200, textAlign: "left" }}>
-        {user?.firstName} {user?.lastName}
+      <td
+        style={{
+          width: 120,
+          textAlign: "left",
+          wordBreak: "break-word",
+          maxWidth: "120px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "120px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {user?.username || "-"}
+        </div>
       </td>
-      <td style={{ width: 200, textAlign: "left" }}>{user?.email}</td>
-      <td style={{ width: 100, textAlign: "left" }}>
-        {tRoles(`role.${user?.role?.id}`)}
+      <td
+        style={{
+          width: 150,
+          textAlign: "left",
+          wordBreak: "break-word",
+          maxWidth: "150px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "150px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {user?.firstName} {user?.lastName}
+        </div>
+      </td>
+      <td
+        style={{
+          width: 180,
+          textAlign: "left",
+          maxWidth: "180px",
+        }}
+      >
+        <Popover width={300} position="bottom" withArrow shadow="md">
+          <Popover.Target>
+            <div
+              style={{
+                maxWidth: "180px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                cursor: "pointer",
+              }}
+            >
+              {user?.email}
+            </div>
+          </Popover.Target>
+          <Popover.Dropdown>
+            <Text size="sm">{user?.email}</Text>
+          </Popover.Dropdown>
+        </Popover>
+      </td>
+      <td
+        style={{
+          width: 100,
+          textAlign: "left",
+          wordBreak: "break-word",
+          maxWidth: "100px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "100px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {tRoles(`role.${user?.role?.id}`)}
+        </div>
       </td>
       <td style={{ width: 375, textAlign: "right" }}>
         {user && <UserActions user={user} />}

@@ -12,15 +12,18 @@ import {
   useGetUserService,
   usePatchUserService,
 } from "@/services/api/services/users";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Role, RoleEnum } from "@/services/api/types/role";
 import { FormActions } from "@/components/form/profile-edit/form-actions";
 import { useSnackbar } from "@/components/mantine/feedback/notification-service";
 import RouteGuard from "@/services/auth/route-guard";
 import useGlobalLoading from "@/services/loading/use-global-loading";
+import { useQueryClient } from "@tanstack/react-query";
+import { usersQueryKeys } from "../../queries/queries";
 
 type EditUserFormData = {
   email: string;
+  username: string;
   firstName: string;
   lastName: string;
   photo?: FileEntity;
@@ -35,6 +38,11 @@ const useValidationEditSchema = () => {
       .email(t("admin-panel-users-edit:inputs.email.validation.invalid"))
       .required(
         t("admin-panel-users-edit:inputs.firstName.validation.required")
+      ),
+    username: yup
+      .string()
+      .required(
+        t("admin-panel-users-edit:inputs.username.validation.required")
       ),
     firstName: yup
       .string()
@@ -59,6 +67,8 @@ const useValidationEditSchema = () => {
 function FormEditUser() {
   const params = useParams<{ id: string }>();
   const userId = params.id;
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const fetchGetUser = useGetUserService();
   const fetchPatchUser = usePatchUserService();
   const { t } = useTranslation("admin-panel-users-edit");
@@ -70,6 +80,7 @@ function FormEditUser() {
     resolver: yupResolver(validationSchema),
     defaultValues: {
       email: "",
+      username: "",
       firstName: "",
       lastName: "",
       role: undefined,
@@ -86,6 +97,7 @@ function FormEditUser() {
       const { data, status } = await fetchPatchUser(
         {
           email: isEmailDirty ? formData.email : undefined,
+          username: formData.username,
           firstName: formData.firstName,
           lastName: formData.lastName,
           role: formData.role,
@@ -113,6 +125,9 @@ function FormEditUser() {
         enqueueSnackbar(t("admin-panel-users-edit:alerts.user.success"), {
           variant: "success",
         });
+        // Invalidate users query to refresh the data
+        queryClient.invalidateQueries({ queryKey: usersQueryKeys.list().key });
+        router.push("/admin-panel/users");
       }
     } finally {
       setLoading(false);
@@ -127,6 +142,7 @@ function FormEditUser() {
         if (status === HTTP_CODES_ENUM.OK) {
           reset({
             email: user?.email ?? "",
+            username: user?.username ?? "",
             firstName: user?.firstName ?? "",
             lastName: user?.lastName ?? "",
             role: {
@@ -169,6 +185,18 @@ function FormEditUser() {
                   label={t("admin-panel-users-edit:inputs.email.label")}
                   error={fieldState.error?.message}
                   data-testid="email"
+                />
+              )}
+            />
+            <Controller
+              name="username"
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  label={t("admin-panel-users-edit:inputs.username.label")}
+                  error={fieldState.error?.message}
+                  data-testid="username"
                 />
               )}
             />

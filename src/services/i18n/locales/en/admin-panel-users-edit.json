@@ -16,6 +16,15 @@
         }
       }
     },
+    "username": {
+      "label": "Username",
+      "validation": {
+        "required": "Username is required",
+        "server": {
+          "usernameAlreadyExists": "Username already exists"
+        }
+      }
+    },
     "firstName": {
       "label": "First Name",
       "validation": {

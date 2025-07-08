@@ -32,7 +32,7 @@ export type UserResponse = User;
 
 export type UserPostRequest = Pick<
   User,
-  "email" | "firstName" | "lastName" | "photo" | "role"
+  "email" | "username" | "firstName" | "lastName" | "photo" | "role"
 > & {
   password: string;
 };
@@ -42,7 +42,10 @@ export type UserPostResponse = User;
 export type UserPatchRequest = {
   id: User["id"];
   data: Partial<
-    Pick<User, "email" | "firstName" | "lastName" | "photo" | "role"> & {
+    Pick<
+      User,
+      "email" | "username" | "firstName" | "lastName" | "photo" | "role"
+    > & {
       password: string;
     }
   >;
